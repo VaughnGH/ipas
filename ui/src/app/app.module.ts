@@ -10,6 +10,18 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+          MatDatepickerModule,
+          MatNativeDateModule,
+        } from '@angular/material';
+
+import { MatFormFieldModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
+
+
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 
 @NgModule({
   declarations: [
@@ -21,7 +33,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    BrowserAnimationsModule,
+    IonicModule.forRoot(MyApp),
+    MatDatepickerModule, MatNativeDateModule,
+    MatFormFieldModule, MatInputModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

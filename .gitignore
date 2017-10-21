@@ -1,3 +1,4 @@
 node_modules/
 ui/www/
 ui/.sourcemaps/
+.DS_Store
