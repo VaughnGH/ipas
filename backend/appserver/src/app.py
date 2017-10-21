@@ -1,22 +1,18 @@
 import logging
-import time
-import redis
 import os
 from tornado import web, ioloop, websocket
-import pandas as pd
-import random
+import tornado
 
 logging.basicConfig(level=logging.INFO)
-sites = pd.read_csv('top-1m.csv')
 
-class IndexHandler(web.RequestHandler):
+class Form(web.RequestHandler):
     def get(self):
-        self.render('html/index.html')
-
-class GetSite(web.RequestHandler):
-    def get(self):
-        index = random.randint(1,1000000)
-        response = {'site' : 'http://' + str(sites.iloc[index]["site"]) }
+        response = {'status' : 'success'}
+        self.write(response)
+    def post(self):
+        data = tornado.escape.json_decode(self.request.body)
+        self.set_header("Content-Type", "application/json")
+        response = {'status' : 'success'}
         self.write(response)
 
 
@@ -25,9 +21,7 @@ settings = {
         'static_path' : os.path.join(os.path.dirname(__file__), 'static')
         }
 handlers = [
-        (r'/', IndexHandler),
-        (r'/js/(.*)', web.StaticFileHandler, {'path' : 'js'}),
-        (r'/site', GetSite),
+        (r'/api/v1/form', Form),
         ]
 
 if __name__ == "__main__":
