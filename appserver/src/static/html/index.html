@@ -1,54 +1,11 @@
 <html>
   <head>
-    <title>SideStage(tm)</title>
+    <title>Cross Country</title>
     <style>
-      body {
-        margin: 0;
-      }
-      #button-area {
-        background-color: #333;
-      }
-      #button-area > * {
-        display: inline-block;
-      }
-      p {
-        color: #EEE;
-      }
     </style>
   </head>
   <body>
-    <div id="button-area">
-      <button onclick="changeSite()">NEW</button>
-      <p id="current-url"></p>
-      <p id="load-status"></p>
-    </div>
-    <iframe id="site-view" src="#" height="95%" width="100%" frameborder="0" onload="doneLoading()" sandbox="">No iframe support :(</iframe>
     <script type="text/javascript">
-      function httpGet(theUrl) {
-          var xmlHttp = new XMLHttpRequest();
-          xmlHttp.open( "GET", "http://" + window.location.hostname + theUrl, false ); // false for synchronous request
-          xmlHttp.send( null );
-          return JSON.parse(xmlHttp.responseText);
-      }
-      function newSite() {
-        return httpGet('/site').site;
-      }
-      function doneLoading() {
-        document.getElementById("load-status").innerHTML = "    Done Loading.";
-        document.getElementById("load-status").style.color = "#C0E0C0";
-      }
-      function changeSite() {
-        var url = newSite();
-        document.getElementById("site-view").src = url;
-        document.getElementById("current-url").innerHTML = url;
-        document.getElementById("load-status").innerHTML = "    Loading...";
-        document.getElementById("load-status").style.color = "#E0C0C0";
-      }
-      changeSite();
-      //var destination = newSite();
-      //window.location.replace = destination;
-      //window.location = destination;
-
     </script>
   </body>
 </html>
