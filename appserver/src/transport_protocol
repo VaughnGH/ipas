@@ -1,0 +1,41 @@
+OUR FORMAT
+==========
+- 2 bytes per note
+* BIG ENDIAN to reflect MIDI protocol *
+
+[ BYTE_1 | BYTE_2 ]
+
+= Numbers indicate bit size =
+Here, Left = MSB, Right = LSB
+[ Enable (1) | Note (7) ] [ Instrument (3) | Sustain (3) | Arpeggio (2) ]
+
+Enable    : 1 - ON , 0 - OFF
+Note      : 0 to 127, Note number
+Intrument : 0 to 7, Instruent number
+Sustain   : 0 to 7, Sustain level
+Arpeggio  : 0 to 3, Arpeggio level
+
+MIDI FORMAT notes:
+==================
+* Assuming `OMNI OFF' -> running in single channel mode (and assuming all in same channel)
+* NOTE : `OMNI ON' implies a 16 channel device, with additional channel changing message mechanisms
+
+3 Bytes, BIG ENDIAN
+MESSAGE = [ STATUS | DATA_1 | DATA_2 ]
+- First bit (MSB) of each byte denotes a status bit (1) or data bit (0)
+
+Message types we'll support: A & B
+A. [ NOTE_ON | NOTE_NUM | N/A ]
+B. [ NOTE_OFF | NOTE_NUM | N/A ]
+  * NOTE_NUM for message type (B), NOTE_OFF, might as well be
+    irrelevant. May be ignored in implementation (as with velocity)
+
+STATUS
+  A. NOTE_ON  : 1000XXXX
+  B. NOTE_OFF : 1001XXXX
+DATA_1
+  A. NOTE_NUM : 0NNNNNNN
+  B. NOTE_NUM : 0NNNNNNN
+DATA_2 (We may ignore this entirely, as irrelevant)
+  A. VELOCITY : 0VVVVVVV
+  B. VELOCITY : 0VVVVVVV
