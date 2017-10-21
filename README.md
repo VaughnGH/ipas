@@ -82,6 +82,7 @@ John Martin
 * Pick what you want to do, where you want to do it
 ** HAS an EXCEL OF data
 NEEDS offline ability
+- online and offline, sharing ability phone-to-phone (e.g. bluetooth)
 
 ### 10
 Sany Cano
