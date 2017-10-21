@@ -4,14 +4,14 @@ all: stop build run
 fresh: clean-all all
 
 build:
-	sudo docker-compose --project-name compute build
+	sudo docker-compose --project-name cross-country build
 run:
-	sudo docker-compose --project-name compute up
+	sudo docker-compose --project-name cross-country up
 
 ####### CLEANUP #########
 
 stop:
-	sudo docker-compose --project-name compute down
+	sudo docker-compose --project-name cross-country down
 
 clean-all: clean purge
 
