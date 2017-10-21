@@ -1,5 +1,5 @@
 # Cross Country
-[MD5 Nexlog](community.md5.net)
+[MD5 Nexlog](http://community.md5.net)
 
 ## Pitches 
 
