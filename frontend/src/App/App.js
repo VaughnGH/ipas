@@ -42,11 +42,11 @@ class App extends Component {
     dialog_error: ''
   }
 
-  setStartDate = (data: undefined, date: object) => {
-    this.setState({startDate: date.getTime()/1000})
+  setstart_date = (data: undefined, date: object) => {
+    this.setState({start_date: date.getTime()/1000})
   }
-  setEndDate = (data:undefined, date: object) => {
-    this.setState({endDate: date.getTime()/1000})
+  setend_date = (data:undefined, date: object) => {
+    this.setState({end_date: date.getTime()/1000})
   }
 
   handleOpen = () => this.setState({open: true})
@@ -72,10 +72,10 @@ class App extends Component {
       newState['dialog_error'] = 'Pick the temperature of the location that will be planned for'
 
 
-    if (this.state.startDate === null || this.state.endDate === null ||
-        typeof this.state.startDate === 'undefined' || typeof this.state.endDate === 'undefined' )
+    if (this.state.start_date === null || this.state.end_date === null ||
+        typeof this.state.start_date === 'undefined' || typeof this.state.end_date === 'undefined' )
       newState['dialog_error'] = 'Fill out out start date and end date information'
-    else if (this.state.endDate < this.state.startDate)
+    else if (this.state.end_date < this.state.start_date)
       newState['dialog_error'] = 'The start date needs to be earlier than the end date'
 
     if (Object.keys(newState).length !== 0)
@@ -98,12 +98,21 @@ class App extends Component {
         ugr_per_day: parseInt(this.state.ugr_per_day, 10)
       }
 
+      data = JSON.stringify(data)
+
+      let http = window.location.protocol
+      let host = window.location.hostname
+      let endpoint = `${http}//${host}:80/api/v1/form` 
+
       $.ajax({
         type: "POST",
-        url: 'http://127.0.0.1:8080/api/v1/form',
+        url: '/api/v1/form',
         data: data,
         success: () => { console.log('sexy as fuck') },
-        dataType: 'json'
+        dataType: 'json',
+        settings: {
+          contentType: 'application/json; charset=UTF-8'
+        }
       });
     }
 
@@ -168,13 +177,13 @@ class App extends Component {
           <ListItem
             className='form-input date-input'
             children={
-              <DatePicker onChange={this.setStartDate} hintText="Start date" />
+              <DatePicker onChange={this.setstart_date} hintText="Start date" />
             }
           />
           <ListItem
             className='form-input date-input'
             children={
-              <DatePicker onChange={this.setEndDate} hintText="End date" />
+              <DatePicker onChange={this.setend_date} hintText="End date" />
             }
           />
           <Subheader>Logistics</Subheader>
