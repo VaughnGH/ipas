@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  backend:
+    build: ./backend/appserver
+    ports:
+      - 80:80
+  react:
+    build: ./my-app
+    ports:
+      - 3000:3000
