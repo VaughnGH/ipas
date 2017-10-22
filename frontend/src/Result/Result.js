@@ -1,4 +1,12 @@
 import React, {Component} from 'react';
+
+import mydarktheme from './mydarktheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
+import RaisedButton from 'material-ui/RaisedButton';
+
+
 import {
   Table,
   TableBody,
@@ -60,8 +68,12 @@ export default class TableExampleComplex extends Component {
   };
 
   render() {
+    const muiTheme = getMuiTheme(mydarktheme);
+
     return (
+      <MuiThemeProvider muiTheme={muiTheme}>
       <div className='result-table-container'>
+
         <Table
           className='result-table'
           height={this.state.height}
@@ -88,6 +100,19 @@ export default class TableExampleComplex extends Component {
           </TableBody>
         </Table>
       </div>
+      <br></br>
+        <div>
+        <center>
+          <RaisedButton
+            primary={true}
+            className='send'
+            label="Send Report"
+            href="mailto:someone@example.com?Subject=Hello%20again&Body=eatmyshorts"
+          />
+          </center>
+        </div>
+      </MuiThemeProvider>
+
     );
   }
 }
