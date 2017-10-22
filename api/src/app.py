@@ -46,6 +46,7 @@ class Form:
         self.meals_per_day = form_dict['mre_per_day'] + form_dict['ugr_per_day']
         self.water_per_day = WATER_REQ[form_dict['weather'].lower()]
         self.total_water_req = form_dict['num_pax'] * self.num_days * self.water_per_day
+        self.total_fuel_req = self.total_road_miles / 6.0 # humveesvees have 4 to 8 mpg
 
     def to_dict(self):
         return self.__dict__
