@@ -54,7 +54,7 @@ class Form:
         return json.dumps(self.to_dict())
 
 settings = {
-        'debug' : True, # FIXME : Toggle this for production
+        'debug' : False, # FIXME : Toggle this for production
         'static_path' : os.path.join(os.path.dirname(__file__), 'static')
         }
 handlers = [
