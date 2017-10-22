@@ -57,6 +57,17 @@ export default class TableExampleComplex extends Component {
     height: '300px',
   };
 
+  constructor (props) {
+    super(props)
+
+  }
+
+  componentDidMount = () => {
+    $.getJSON('/api/v1/form' ,(data) => {
+      console.log(data)
+    })
+  }
+
   handleToggle = (event, toggled) => {
     this.setState({
       [event.target.name]: toggled,

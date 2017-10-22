@@ -101,8 +101,8 @@ class App extends Component {
       })
     else {
       let data = {
-        start_date: parseInt(this.state.start_date, 10),
-        end_date: parseInt(this.state.end_date, 10),
+        start_date: this.state.start_date,
+        end_date: this.state.end_date,
         num_pax: parseInt(this.state.num_pax, 10),
         weather: this.state.weather,
         avg_distance: parseFloat(this.state.avg_distance, 10),
@@ -117,11 +117,13 @@ class App extends Component {
       let host = window.location.hostname
       let endpoint = `${http}//${host}:80/api/v1/form` 
 
+      console.log(this.props)
+
       $.ajax({
         type: "POST",
         url: '/api/v1/form',
         data: data,
-        success: () => { console.log('sexy as fuck') },
+        success: () => { this.props.history.push('/result') },
         dataType: 'json',
         settings: {
           contentType: 'application/json; charset=UTF-8'
