@@ -1,5 +1,4 @@
 .App {
-  text-align: center;
 }
 
 .App-logo {
@@ -19,4 +18,20 @@
 
 .App-intro {
   font-size: large;
+}
+
+.form-input > div > div {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.submit {
+  display: block! important;
+  width: 50%;
+  margin: 10px auto 20px auto;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
