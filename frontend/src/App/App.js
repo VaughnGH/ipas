@@ -13,6 +13,7 @@ import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
+import Divider from 'material-ui/Divider';
 
 import logo from '../assets/logo.png';
 import './App.css';
@@ -247,9 +248,7 @@ class App extends Component {
         <div className='temperature-input'>
           {this.temperatureButtons()}
         </div>
-        <br></br>
-        <hr></hr>
-        <br></br>
+        <Divider style={{marginBottom: '30px', marginTop: '30px', width: '80%', display: 'block', marginLeft: 'auto', marginRight: 'auto'}}/>
         <div>
           <RaisedButton
             primary={true}
