@@ -9,6 +9,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./src/* ./
 
-EXPOSE 80
+EXPOSE 81
 ENTRYPOINT python app.py
 #CMD ["python", "./app.py"]
