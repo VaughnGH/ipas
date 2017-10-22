@@ -22,6 +22,19 @@ const styles = {
   margin: 6,
 };
 
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+
 class App extends Component {
 
   state = {
@@ -43,10 +56,10 @@ class App extends Component {
   }
 
   setstart_date = (data: undefined, date: object) => {
-    this.setState({start_date: date.getTime()/1000})
+    this.setState({start_date: formatDate(date)})
   }
   setend_date = (data:undefined, date: object) => {
-    this.setState({end_date: date.getTime()/1000})
+    this.setState({end_date: formatDate(date)})
   }
 
   handleOpen = () => this.setState({open: true})
