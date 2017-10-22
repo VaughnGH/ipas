@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames'
 
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import mydarktheme from './mydarktheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -124,7 +124,6 @@ class App extends Component {
     this.setState(newState)
   }
 
-
   render() {
     const actions =
       <FlatButton
@@ -133,13 +132,15 @@ class App extends Component {
         onClick={this.handleClose}
       />
 
+      const muiTheme = getMuiTheme(mydarktheme);
+
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">IPAS-135</h1>
         </header>
-        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+        <MuiThemeProvider muiTheme={muiTheme}>
 
         <List className='form'>
           <Subheader>Date</Subheader>
