@@ -1,8 +1,10 @@
 version: '2'
 
 services:
-  web:
-    build: ./appserver
+  api:
+    build: ./api
     ports:
       - 80:80
+  ui:
+    build: ./my-app
 
