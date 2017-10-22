@@ -117,7 +117,7 @@ class App extends Component {
 
       let http = window.location.protocol
       let host = window.location.hostname
-      let endpoint = `${http}//${host}:80/api/v1/form` 
+      let endpoint = `${http}//${host}:80/api/v1/form`
 
       let request = () => {
         $.ajax({
@@ -187,12 +187,14 @@ class App extends Component {
 
     return (
       <div className='App-container'>
-      {this.state.loading ? 
+      {this.state.loading ?
         (
           <div className="App">
             <header className="App-header">
+            <center>
               <img src={logo} className="App-logo" alt="logo" />
               <h1 className="App-title">IPAS-135</h1>
+              </center>
             </header>
             <MuiThemeProvider muiTheme={muiTheme}>
 
@@ -277,7 +279,7 @@ class App extends Component {
               />
             </List>
             </MuiThemeProvider>
-
+            <h2>Climate</h2>
             <div className='temperature-input'>
               {this.temperatureButtons()}
             </div>
@@ -304,7 +306,7 @@ class App extends Component {
             </center>
             <br></br>
           </div>
-        ) 
+        )
         :
         (
           <div className='loading'>
