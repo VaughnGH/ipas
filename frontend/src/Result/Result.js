@@ -19,37 +19,6 @@ import {
 
 import './Result.css'
 
-const tableData = [
-  {
-    name: 'John Smith',
-    status: 'Employed',
-  },
-  {
-    name: 'Randal White',
-    status: 'Unemployed',
-  },
-  {
-    name: 'Stephanie Sanders',
-    status: 'Employed',
-  },
-  {
-    name: 'Steve Brown',
-    status: 'Employed',
-  },
-  {
-    name: 'Joyce Whitten',
-    status: 'Employed',
-  },
-  {
-    name: 'Samuel Roberts',
-    status: 'Employed',
-  },
-  {
-    name: 'Adam Moore',
-    status: 'Employed',
-  },
-];
-
 let key_to_text = {
   start_date: 'Start Date',
   end_date: 'End Date',
@@ -58,18 +27,50 @@ let key_to_text = {
   avg_distance: 'Average Distance',
   num_vehicles: 'Number of vehicles',
   mre_per_day: 'MRE Per Day',
-  ugr_per_day: 'UGR Per Day'
+  ugr_per_day: 'UGR Per Day',
+  total_water_req: 'Total Water Required',
+  water_per_day: 'Water Per Day',
+  total_ugr: "Total UGR Required",
+  total_mre: "Total MRE Required",
+  total_road_miles: "Total Road Miles",
+  num_days: "Duration",
+  total_fuel_req: "Total Fuel Required"
+}
+
+let units_map = {
+  start_date: '',
+  end_date: '',
+  num_pax: '',
+  weather: '',
+  avg_distance: 'Mi',
+  num_vehicles: '',
+  mre_per_day: '',
+  ugr_per_day: '',
+  total_water_req: 'Gal',
+  water_per_day: 'Gal',
+  total_ugr: "",
+  total_mre: "",
+  total_road_miles: "Mi",
+  num_days: "",
+  total_fuel_req: "Mi"
 }
 
 let keys = [
   'start_date',
   'end_date',
+  'num_days',
   'num_pax',
-  'weather',
-  'avg_distance',
-  'num_vehicles',
-  'mre_per_day',
-  'ugr_per_day'
+  // 'weather',
+  // 'avg_distance',
+  // 'num_vehicles',
+  // 'mre_per_day',
+  // 'ugr_per_day',
+  'total_water_req',
+  'water_per_day',
+  'total_ugr',
+  'total_mre',
+  'total_road_miles',
+  'total_fuel_req',
 ]
 
 /**
@@ -77,7 +78,7 @@ let keys = [
  */
 export default class TableExampleComplex extends Component {
   state = {
-    height: '300px',
+    height: '80%',
     loaded: false
   };
 
@@ -107,19 +108,27 @@ export default class TableExampleComplex extends Component {
     this.setState({height: event.target.value});
   };
 
+  constructEmailLink = () => {
+    var emailData = "mailto:someone@example.com?Subject=Supply%20Report&Body="
+    console.log()
+    for (var i in keys){
+      var key = keys[i];
+      //var spac = 20 - tableData[i]['name'].length
+      //emailData += tableData[i]['name'] + "%20".repeat(spac) + "%09" + tableData[i]['status'] + "%0D%0A";
+      emailData += key_to_text[key] + "%3A" + "%20%09" + String(this.state.data[key]) + "%0D%0A";
+    }
+    emailData += "%0D%0A%0D%0A" + "http://ipas.site/#/result/" + this.props.match.params.form_id;
+    return emailData
+  }
+
   render() {
     const muiTheme = getMuiTheme(mydarktheme);
 
-    var emailData = "mailto:someone@example.com?Subject=Supply%20Report&Body="
-    for (var i in tableData){
-      //var spac = 20 - tableData[i]['name'].length
-      //emailData += tableData[i]['name'] + "%20".repeat(spac) + "%09" + tableData[i]['status'] + "%0D%0A";
-      emailData += tableData[i]['name'] + "%3A" + "%20%09" + tableData[i]['status'] + "%0D%0A";
-    }
+
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        {this.state.loaded ? 
+        {this.state.loaded ?
           (
             <div>
             <div className='result-table-container'>
@@ -133,7 +142,7 @@ export default class TableExampleComplex extends Component {
                   adjustForCheckbox={false}
                 >
                   <TableRow>
-                    <TableHeaderColumn>Key</TableHeaderColumn>
+                    <TableHeaderColumn>Category</TableHeaderColumn>
                     <TableHeaderColumn>Value</TableHeaderColumn>
                   </TableRow>
                 </TableHeader>
@@ -144,7 +153,7 @@ export default class TableExampleComplex extends Component {
                   {keys.map( (key, index) => (
                     <TableRow key={index}>
                       <TableRowColumn>{key_to_text[key]}</TableRowColumn>
-                      <TableRowColumn>{this.state.data[key]}</TableRowColumn>
+                      <TableRowColumn>{this.state.data[key]} {units_map[key]}</TableRowColumn>
                     </TableRow>
                     ))}
                 </TableBody>
@@ -157,7 +166,7 @@ export default class TableExampleComplex extends Component {
                   primary={true}
                   className='send'
                   label="Send Report"
-                  href={emailData}
+                  href={this.constructEmailLink()}
                 />
               </center>
             </div>
