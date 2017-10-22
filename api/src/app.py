@@ -30,7 +30,7 @@ class FormEndpoint(web.RequestHandler):
         self.write(response)
 class FormRetrieve(web.RequestHandler):
     def get(self, id_):
-        response = srt(redis_conn.get(id_))
+        response = str(redis_conn.get(id_))
         self.set_header("Content-Type", "application/json")
         self.write(response)
 
