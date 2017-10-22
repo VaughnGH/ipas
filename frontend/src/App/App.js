@@ -227,7 +227,9 @@ class App extends Component {
         <div className='temperature-input'>
           {this.temperatureButtons()}
         </div>
-
+        <br></br>
+        <hr></hr>
+        <br></br>
         <div>
           <RaisedButton
             primary={true}
@@ -244,7 +246,13 @@ class App extends Component {
         >
           {this.state.dialog_error}
         </Dialog>
+        <br></br>
+        <center>
+        <p> &copy; 2017 </p>
+        </center>
+        <br></br>
       </div>
+
     );
   }
 }

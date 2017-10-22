@@ -1,6 +1,7 @@
 .App {
   background-color: #222;
-  color: white;
+  color: #fff;
+  border-color: #77e;
 }
 
 .App-logo {
@@ -29,6 +30,11 @@
   margin: 0px auto;
   width: 90%;
   color: white;
+}
+
+hr {
+  color: #888;
+  background-color: #888;
 }
 
 .form-input > div > div {
