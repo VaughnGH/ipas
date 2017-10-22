@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import classNames from 'classnames'
+import $ from 'jquery'
 
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import mydarktheme from './mydarktheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -12,6 +13,7 @@ import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
+import Divider from 'material-ui/Divider';
 
 import logo from '../assets/logo.png';
 import './App.css';
@@ -84,6 +86,26 @@ class App extends Component {
           this.handleOpen()
         }
       })
+    else {
+      let data = {
+        start_date: parseInt(this.state.start_date, 10),
+        end_date: parseInt(this.state.end_date, 10),
+        num_pax: parseInt(this.state.num_pax, 10),
+        weather: this.state.weather,
+        avg_distance: parseFloat(this.state.avg_distance, 10),
+        num_vehicles: parseInt(this.state.num_vehicles, 10),
+        mre_per_day: parseInt(this.state.mre_per_day, 10),
+        ugr_per_day: parseInt(this.state.ugr_per_day, 10)
+      }
+
+      $.ajax({
+        type: "POST",
+        url: 'http://127.0.0.1:8080/api/v1/form',
+        data: data,
+        success: () => { console.log('sexy as fuck') },
+        dataType: 'json'
+      });
+    }
 
   }
 
@@ -108,7 +130,6 @@ class App extends Component {
                         labelColor="#fff"
                         />
             })
-
   }
 
   saveInfo = (key, value) => {
@@ -124,7 +145,6 @@ class App extends Component {
     this.setState(newState)
   }
 
-
   render() {
     const actions =
       <FlatButton
@@ -133,13 +153,15 @@ class App extends Component {
         onClick={this.handleClose}
       />
 
+      const muiTheme = getMuiTheme(mydarktheme);
+
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">IPAS-135</h1>
         </header>
-        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+        <MuiThemeProvider muiTheme={muiTheme}>
 
         <List className='form'>
           <Subheader>Date</Subheader>
@@ -226,7 +248,7 @@ class App extends Component {
         <div className='temperature-input'>
           {this.temperatureButtons()}
         </div>
-
+        <Divider style={{marginBottom: '30px', marginTop: '30px', width: '80%', display: 'block', marginLeft: 'auto', marginRight: 'auto'}}/>
         <div>
           <RaisedButton
             primary={true}
@@ -243,7 +265,13 @@ class App extends Component {
         >
           {this.state.dialog_error}
         </Dialog>
+        <br></br>
+        <center>
+        <p> &copy; 2017 </p>
+        </center>
+        <br></br>
       </div>
+
     );
   }
 }
