@@ -4,6 +4,8 @@ services:
   backend:
     build: ./api
     container_name: tornado
+    environment:
+      - PYTHONUNBUFFERED=1
     ports:
       - 81:81
     links:
