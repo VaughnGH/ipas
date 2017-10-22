@@ -22,9 +22,9 @@ class FormEndpoint(web.RequestHandler):
         self.write(response)
     def post(self):
         form_dict, id_ = tornado.escape.json_decode(self.request.body), str(uuid())
-        redis_conn.set(id_, json.dumps(form_dict))
         #json.dumps means potential alphabetically sorted keys, due to python's dict hash() for key alignment
         response = Form(form_dict).to_dict()
+        redis_conn.set(id_, json.dumps({**form_dict, **response}))
         response['id'] = id_
         self.set_header("Content-Type", "application/json")
         self.write(response)
