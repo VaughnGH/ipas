@@ -47,7 +47,7 @@ settings = {
         'static_path' : os.path.join(os.path.dirname(__file__), 'static')
         }
 handlers = [
-        (r'/api/v1/form', FormEndpoint),
+        (r'/form', FormEndpoint),
         ]
 
 if __name__ == "__main__":
