@@ -5,12 +5,26 @@
 	display: block;
 }
 
+.result-table {
+	margin-top: 30px;
+}
+
 body {
     background-color: #2d2d2d;
 }
 
-.Result {
-  background-color: #222;
+.loading {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.loading > h1 {
+  font-weight: lighter;
   color: #fff;
-  border-color: #77e;
 }

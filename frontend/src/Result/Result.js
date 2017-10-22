@@ -6,7 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import RaisedButton from 'material-ui/RaisedButton';
-
+import CircularProgress from 'material-ui/CircularProgress';
 
 import {
   Table,
@@ -50,12 +50,35 @@ const tableData = [
   },
 ];
 
+let key_to_text = {
+  start_date: 'Start Date',
+  end_date: 'End Date',
+  num_pax: 'PAX Count',
+  weather: 'Weather',
+  avg_distance: 'Average Distance',
+  num_vehicles: 'Number of vehicles',
+  mre_per_day: 'MRE Per Day',
+  ugr_per_day: 'UGR Per Day'
+}
+
+let keys = [
+  'start_date',
+  'end_date',
+  'num_pax',
+  'weather',
+  'avg_distance',
+  'num_vehicles',
+  'mre_per_day',
+  'ugr_per_day'
+]
+
 /**
  * A more complex example, allowing the table height to be set, and key boolean properties to be toggled.
  */
 export default class TableExampleComplex extends Component {
   state = {
     height: '300px',
+    loaded: false
   };
 
   constructor (props) {
@@ -67,7 +90,10 @@ export default class TableExampleComplex extends Component {
     let form_id = this.props.match.params.form_id
 
     $.getJSON(`/api/v1/get/${form_id}` , (data) => {
-      console.log(data)
+      this.setState({
+        loaded: true,
+        data: data
+      })
     })
   }
 
@@ -93,45 +119,58 @@ export default class TableExampleComplex extends Component {
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-      <div className='result-table-container'>
+        {this.state.loaded ? 
+          (
+            <div>
+            <div className='result-table-container'>
 
-        <Table
-          className='result-table'
-          height={this.state.height}
-        >
-          <TableHeader
-            displaySelectAll={false}
-            adjustForCheckbox={false}
-          >
-            <TableRow>
-              <TableHeaderColumn tooltip="The Name">Name</TableHeaderColumn>
-              <TableHeaderColumn tooltip="The Status">Status</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody
-            displayRowCheckbox={false}
-            showRowHover={true}
-          >
-            {tableData.map( (row, index) => (
-              <TableRow key={index}>
-                <TableRowColumn>{row.name}</TableRowColumn>
-                <TableRowColumn>{row.status}</TableRowColumn>
-              </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </div>
-      <br></br>
-        <div>
-        <center>
-          <RaisedButton
-            primary={true}
-            className='send'
-            label="Send Report"
-            href={emailData}
-          />
-          </center>
-        </div>
+              <Table
+                className='result-table'
+                height={this.state.height}
+              >
+                <TableHeader
+                  displaySelectAll={false}
+                  adjustForCheckbox={false}
+                >
+                  <TableRow>
+                    <TableHeaderColumn>Key</TableHeaderColumn>
+                    <TableHeaderColumn>Value</TableHeaderColumn>
+                  </TableRow>
+                </TableHeader>
+                <TableBody
+                  displayRowCheckbox={false}
+                  showRowHover={true}
+                >
+                  {keys.map( (key, index) => (
+                    <TableRow key={index}>
+                      <TableRowColumn>{key_to_text[key]}</TableRowColumn>
+                      <TableRowColumn>{this.state.data[key]}</TableRowColumn>
+                    </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </div>
+            <br></br>
+            <div>
+              <center>
+                <RaisedButton
+                  primary={true}
+                  className='send'
+                  label="Send Report"
+                  href={emailData}
+                />
+              </center>
+            </div>
+          </div>
+        )
+        :
+        (
+          <div className='loading'>
+            <CircularProgress className='loading-item' size={80} thickness={5} />
+            <h1 className='loading-item'>Building table</h1>
+          </div>
+        )
+      }
       </MuiThemeProvider>
 
     );
