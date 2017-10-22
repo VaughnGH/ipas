@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import $ from 'jquery'
 
 import mydarktheme from './mydarktheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';

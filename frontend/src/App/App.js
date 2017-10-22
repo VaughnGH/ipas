@@ -14,6 +14,7 @@ import Subheader from 'material-ui/Subheader';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import Divider from 'material-ui/Divider';
+import CircularProgress from 'material-ui/CircularProgress';
 
 import logo from '../assets/logo.png';
 import './App.css';
@@ -52,7 +53,8 @@ class App extends Component {
     mre_per_day_error: '',
     ugr_per_day: null,
     ugr_per_day_error: '',
-    dialog_error: ''
+    dialog_error: '',
+    loading: true
   }
 
   setstart_date = (data: undefined, date: object) => {
@@ -117,18 +119,22 @@ class App extends Component {
       let host = window.location.hostname
       let endpoint = `${http}//${host}:80/api/v1/form` 
 
-      console.log(this.props)
+      let request = () => {
+        $.ajax({
+          type: "POST",
+          url: '/api/v1/form',
+          data: data,
+          success: () => { this.props.history.push('/result') },
+          dataType: 'json',
+          settings: {
+            contentType: 'application/json; charset=UTF-8'
+          }
+        });
+      }
 
-      $.ajax({
-        type: "POST",
-        url: '/api/v1/form',
-        data: data,
-        success: () => { this.props.history.push('/result') },
-        dataType: 'json',
-        settings: {
-          contentType: 'application/json; charset=UTF-8'
-        }
-      });
+      this.setState({
+        loading: false
+      }, request)
     }
 
   }
@@ -180,122 +186,134 @@ class App extends Component {
       const muiTheme = getMuiTheme(mydarktheme);
 
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">IPAS-135</h1>
-        </header>
-        <MuiThemeProvider muiTheme={muiTheme}>
+      <div className='App-container'>
+      {this.state.loading ? 
+        (
+          <div className="App">
+            <header className="App-header">
+              <img src={logo} className="App-logo" alt="logo" />
+              <h1 className="App-title">IPAS-135</h1>
+            </header>
+            <MuiThemeProvider muiTheme={muiTheme}>
 
-        <List className='form'>
-          <Subheader>Date</Subheader>
-          <ListItem
-            className='form-input date-input'
-            children={
-              <DatePicker onChange={this.setstart_date} hintText="Start date" />
-            }
-          />
-          <ListItem
-            className='form-input date-input'
-            children={
-              <DatePicker onChange={this.setend_date} hintText="End date" />
-            }
-          />
-          <Subheader>Logistics</Subheader>
-          <ListItem
-            className='form-input'
-            children={
-              <TextField
-                floatingLabelText='Total PAX Estimate'
-                hintText="Amount of personnel attending"
-                type="number"
-                min="0"
-                onChange={(event: object, newValue: string) => this.saveInfo('num_pax', newValue)}
-                errorText={this.state.num_pax_error}
+            <List className='form'>
+              <Subheader>Date</Subheader>
+              <ListItem
+                className='form-input date-input'
+                children={
+                  <DatePicker onChange={this.setstart_date} hintText="Start date" />
+                }
               />
-            }
-          />
-          <ListItem
-            className='form-input'
-            children={
-              <TextField
-                floatingLabelText="Average distance traveled per day"
-                hintText="Miles traveled per day"
-                type="number"
-                min="0"
-                onChange={(event: object, newValue: string) => this.saveInfo('avg_distance', newValue)}
-                errorText={this.state.avg_distance_error}
+              <ListItem
+                className='form-input date-input'
+                children={
+                  <DatePicker onChange={this.setend_date} hintText="End date" />
+                }
               />
-            }
-          />
-          <ListItem
-            className='form-input'
-            children={
-              <TextField
-                floatingLabelText="Total number of vehicles"
-                type="number"
-                min="0"
-                onChange={(event: object, newValue: string) => this.saveInfo('num_vehicles', newValue)}
-                errorText={this.state.num_vehicles_error}
+              <Subheader>Logistics</Subheader>
+              <ListItem
+                className='form-input'
+                children={
+                  <TextField
+                    floatingLabelText='Total PAX Estimate'
+                    hintText="Amount of personnel attending"
+                    type="number"
+                    min="0"
+                    onChange={(event: object, newValue: string) => this.saveInfo('num_pax', newValue)}
+                    errorText={this.state.num_pax_error}
+                  />
+                }
               />
-            }
-          />
-          <ListItem
-            className='form-input'
-            children={
-              <TextField
-                floatingLabelText="Daily MRE count"
-                hintText="MREs needed per person per day"
-                type="number"
-                min="0"
-                onChange={(event: object, newValue: string) => this.saveInfo('mre_per_day', newValue)}
-                errorText={this.state.mre_per_day_error}
+              <ListItem
+                className='form-input'
+                children={
+                  <TextField
+                    floatingLabelText="Average distance traveled per day"
+                    hintText="Miles traveled per day"
+                    type="number"
+                    min="0"
+                    onChange={(event: object, newValue: string) => this.saveInfo('avg_distance', newValue)}
+                    errorText={this.state.avg_distance_error}
+                  />
+                }
               />
-            }
-          />
-          <ListItem
-            className='form-input'
-            children={
-              <TextField
-                floatingLabelText="UGR count"
-                hintText="UGRs needed per person per day"
-                type="number"
-                min="0"
-                onChange={(event: object, newValue: string) => this.saveInfo('ugr_per_day', newValue)}
-                errorText={this.state.ugr_per_day_error}
+              <ListItem
+                className='form-input'
+                children={
+                  <TextField
+                    floatingLabelText="Total number of vehicles"
+                    type="number"
+                    min="0"
+                    onChange={(event: object, newValue: string) => this.saveInfo('num_vehicles', newValue)}
+                    errorText={this.state.num_vehicles_error}
+                  />
+                }
               />
-            }
-          />
-        </List>
-        </MuiThemeProvider>
+              <ListItem
+                className='form-input'
+                children={
+                  <TextField
+                    floatingLabelText="Daily MRE count"
+                    hintText="MREs needed per person per day"
+                    type="number"
+                    min="0"
+                    onChange={(event: object, newValue: string) => this.saveInfo('mre_per_day', newValue)}
+                    errorText={this.state.mre_per_day_error}
+                  />
+                }
+              />
+              <ListItem
+                className='form-input'
+                children={
+                  <TextField
+                    floatingLabelText="UGR count"
+                    hintText="UGRs needed per person per day"
+                    type="number"
+                    min="0"
+                    onChange={(event: object, newValue: string) => this.saveInfo('ugr_per_day', newValue)}
+                    errorText={this.state.ugr_per_day_error}
+                  />
+                }
+              />
+            </List>
+            </MuiThemeProvider>
 
-        <div className='temperature-input'>
-          {this.temperatureButtons()}
-        </div>
-        <Divider style={{marginBottom: '30px', marginTop: '30px', width: '80%', display: 'block', marginLeft: 'auto', marginRight: 'auto'}}/>
-        <div>
-          <RaisedButton
-            primary={true}
-            className='submit'
-            label="Submit Plan"
-            onClick={this.submit}
-          />
-        </div>
-        <Dialog
-          actions={actions}
-          modal={false}
-          open={this.state.open}
-          onRequestClose={this.handleClose}
-        >
-          {this.state.dialog_error}
-        </Dialog>
-        <br></br>
-        <center>
-        <p> &copy; 2017 </p>
-        </center>
-        <br></br>
+            <div className='temperature-input'>
+              {this.temperatureButtons()}
+            </div>
+            <Divider style={{marginBottom: '30px', marginTop: '30px', width: '80%', display: 'block', marginLeft: 'auto', marginRight: 'auto'}}/>
+            <div>
+              <RaisedButton
+                primary={true}
+                className='submit'
+                label="Submit Plan"
+                onClick={this.submit}
+              />
+            </div>
+            <Dialog
+              actions={actions}
+              modal={false}
+              open={this.state.open}
+              onRequestClose={this.handleClose}
+            >
+              {this.state.dialog_error}
+            </Dialog>
+            <br></br>
+            <center>
+            <p> &copy; 2017 </p>
+            </center>
+            <br></br>
+          </div>
+        ) 
+        :
+        (
+          <div className='loading'>
+            <CircularProgress className='loading-item' size={80} thickness={5} />
+            <h1 className='loading-item'>Loading</h1>
+          </div>
+        )
+      }
       </div>
-
     );
   }
 }
