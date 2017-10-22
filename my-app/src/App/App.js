@@ -6,7 +6,7 @@ import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import TextField from 'material-ui/TextField';
 
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 import './App.css';
 
 const styles = {
@@ -36,20 +36,20 @@ class App extends Component {
               {temp: 'Mild', color: 'grey'},
               {temp: 'Hot', color: 'red'}
             ].map( temp_object => {
-              return <RaisedButton 
-                        label={temp_object.temp} 
+              return <RaisedButton
+                        label={temp_object.temp}
                         onClick={() => this.setTemperature(temp_object.temp)}
                         />
             })
 
-  } 
+  }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Marine Corps Logistics</h1>
+          <h1 className="App-title">IPAS-135</h1>
         </header>
 
         <div className='form'>
