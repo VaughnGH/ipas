@@ -13,7 +13,7 @@ WATER_REQ = {'hot' : 3.17, 'mild' : 1.59, 'cold' : 2.37}
 REQ_FIELDS = {'start_date', 'end_date', 'num_pax', 'weather', 'avg_distance', 'num_vehicles', 'mre_per_day', 'ugr_per_day'} 
 RESP_FIELDS = {'total_road_miles', 'meals_per_day', 'total_mre', 'total_ugr', 'num_days', 'water_per_day', 'total_water_req'}
 
-redis_conn = redis.StrictRedis(host='redis', port=6379, db=0, charset="utf-8", decode_responses=True))
+redis_conn = redis.StrictRedis(host='redis', port=6379, db=0, charset="utf-8", decode_responses=True)
 
 class FormEndpoint(web.RequestHandler):
     def get(self):
