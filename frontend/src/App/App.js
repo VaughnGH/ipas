@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import classNames from 'classnames'
 
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
 import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -32,7 +36,7 @@ class App extends Component {
     mre_per_day: null,
     mre_per_day_error: '',
     ugr_per_day: null,
-    ugr_per_day_error: '', 
+    ugr_per_day_error: '',
     dialog_error: ''
   }
 
@@ -61,12 +65,12 @@ class App extends Component {
       newState['mre_per_day_error'] = 'Fill number of MRE needed'
     if (this.state.ugr_per_day === null || this.state.ugr_per_day === '')
       newState['ugr_per_day_error'] = 'Fill number of UGR needed'
-    
+
     if (this.state.weather === null)
       newState['dialog_error'] = 'Pick the temperature of the location that will be planned for'
 
 
-    if (this.state.startDate === null || this.state.endDate === null || 
+    if (this.state.startDate === null || this.state.endDate === null ||
         typeof this.state.startDate === 'undefined' || typeof this.state.endDate === 'undefined' )
       newState['dialog_error'] = 'Fill out out start date and end date information'
     else if (this.state.endDate < this.state.startDate)
@@ -80,18 +84,18 @@ class App extends Component {
           this.handleOpen()
         }
       })
-    
+
   }
 
   temperatureButtons = () => {
     return [
-              {temp: 'Cold', color: '#2042a6'},
-              {temp: 'Mild', color: '#8e8e93'},
-              {temp: 'Hot', color: '#ef456a'}
+              {temp: 'Cold', color: '#61a8ff'},
+              {temp: 'Mild', color: '#ffba0a'},
+              {temp: 'Hot', color: '#ff6161'}
             ].map( temp_object => {
 
-              let classes = 
-                this.state.weather !== null && this.state.weather === temp_object.temp ? 
+              let classes =
+                this.state.weather !== null && this.state.weather === temp_object.temp ?
                 ['temperature-button', 'active'] :
                 ['temperature-button']
 
@@ -122,7 +126,7 @@ class App extends Component {
 
 
   render() {
-    const actions = 
+    const actions =
       <FlatButton
         label="Ok"
         primary={true}
@@ -135,6 +139,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">IPAS-135</h1>
         </header>
+        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
 
         <List className='form'>
           <Subheader>Date</Subheader>
@@ -216,6 +221,8 @@ class App extends Component {
             }
           />
         </List>
+        </MuiThemeProvider>
+
         <div className='temperature-input'>
           {this.temperatureButtons()}
         </div>
