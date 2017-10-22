@@ -11,7 +11,7 @@ services:
     depends_on:
       - redis
   react:
-    build: ./my-app
+    build: ./frondend
     container_name: react
     ports:
       - 80:3000

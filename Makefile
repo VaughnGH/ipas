@@ -1,8 +1,10 @@
 ###### BUILD / EXEC ######
 
-all: stop build run
+all: stop pull build run
 fresh: clean-all all
 
+pull:
+	git fetch --all && git reset --hard origin/master && git pull
 build:
 	sudo docker-compose --project-name cross-country build
 run:
