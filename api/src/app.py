@@ -31,8 +31,9 @@ class FormEndpoint(web.RequestHandler):
 
 class Form:
     def __init__(self, form_dict):
-        start_date = datetime.datetime.strptime(form_dict['start_date'], "%Y/%m/%d")
-        end_date = datetime.datetime.strptime(form_dict['end_date'], "%Y/%m/%d")
+        date_format_str = "%Y-%m-%d"
+        start_date = datetime.datetime.strptime(form_dict['start_date'], date_format_str)
+        end_date = datetime.datetime.strptime(form_dict['end_date'], date_format_str)
         self.num_days = abs((end_date-start_date).days)
         self.total_road_miles = form_dict['avg_distance'] * form_dict['num_vehicles']
         self.total_mre = form_dict['mre_per_day'] * form_dict['num_pax'] * num_days
