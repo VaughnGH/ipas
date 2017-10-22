@@ -72,8 +72,9 @@ export default class TableExampleComplex extends Component {
 
     var emailData = "mailto:someone@example.com?Subject=Supply%20Report&Body="
     for (var i in tableData){
-      var spac = 30 - tableData[i]['name'].length
-      emailData += tableData[i]['name'] + " ".repeat(spac) + tableData[i]['status'] + "%0D%0A";
+      //var spac = 20 - tableData[i]['name'].length
+      //emailData += tableData[i]['name'] + "%20".repeat(spac) + "%09" + tableData[i]['status'] + "%0D%0A";
+      emailData += tableData[i]['name'] + "%3A" + "%20%09" + tableData[i]['status'] + "%0D%0A";
     }
 
     return (

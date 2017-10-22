@@ -21,7 +21,7 @@ class FormEndpoint(web.RequestHandler):
         self.set_header("Content-Type", "application/json")
         self.write(response)
     def post(self):
-        form_dict, id_ = tornado.escape.json_decode(self.request.body), uuid()
+        form_dict, id_ = tornado.escape.json_decode(self.request.body), str(uuid())
         redis_conn.set(id_, json.dumps(form_dict))
         #json.dumps means potential alphabetically sorted keys, due to python's dict hash() for key alignment
         response = Form(form_dict).to_dict()
@@ -41,11 +41,11 @@ class Form:
         end_date = datetime.datetime.strptime(form_dict['end_date'], date_format_str)
         self.num_days = abs((end_date-start_date).days)
         self.total_road_miles = form_dict['avg_distance'] * form_dict['num_vehicles']
-        self.total_mre = form_dict['mre_per_day'] * form_dict['num_pax'] * num_days
-        self.total_ugr = form_dict['ugr_per_day'] * form_dict['num_pax'] * num_days
+        self.total_mre = form_dict['mre_per_day'] * form_dict['num_pax'] * self.num_days
+        self.total_ugr = form_dict['ugr_per_day'] * form_dict['num_pax'] * self.num_days
         self.meals_per_day = form_dict['mre_per_day'] + form_dict['ugr_per_day']
         self.water_per_day = WATER_REQ[form_dict['weather'].lower()]
-        self.total_water_req = form_dict['num_pax'] * form_dict['num_days'] * self.water_per_day
+        self.total_water_req = form_dict['num_pax'] * self.num_days * self.water_per_day
 
     def to_dict(self):
         return self.__dict__
