@@ -38,6 +38,10 @@ hr {
   background-color: #888;
 }
 
+.climate {
+  font-weight: normal;
+}
+
 .form-input > div > div {
   padding-top: 8px !important;
   padding-bottom: 8px !important;

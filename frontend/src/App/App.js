@@ -283,7 +283,7 @@ class App extends Component {
             </List>
             </MuiThemeProvider>
             <center>
-              <h3>Climate</h3>
+              <h3 className='climate'>Climate</h3>
             </center>
             <div className='temperature-input'>
               {this.temperatureButtons()}
