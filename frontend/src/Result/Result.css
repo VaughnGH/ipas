@@ -1,16 +1,6 @@
-.result-container {
+.result-table-container {
+	width: 80% !important;
+	max-width: 500px;
+	margin: 0px auto;
 	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	width: 80%;
-}
-
-.result-container > h1 {
-	text-align: center;
-}
-
-.result-container > img {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
 }
