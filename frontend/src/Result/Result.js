@@ -70,6 +70,12 @@ export default class TableExampleComplex extends Component {
   render() {
     const muiTheme = getMuiTheme(mydarktheme);
 
+    var emailData = "mailto:someone@example.com?Subject=Supply%20Report&Body="
+    for (var i in tableData){
+      var spac = 30 - tableData[i]['name'].length
+      emailData += tableData[i]['name'] + " ".repeat(spac) + tableData[i]['status'] + "%0D%0A";
+    }
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
       <div className='result-table-container'>
@@ -107,7 +113,7 @@ export default class TableExampleComplex extends Component {
             primary={true}
             className='send'
             label="Send Report"
-            href="mailto:someone@example.com?Subject=Hello%20again&Body=eatmyshorts"
+            href={emailData}
           />
           </center>
         </div>
