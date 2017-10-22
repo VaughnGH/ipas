@@ -17,6 +17,7 @@ redis_conn = redis.StrictRedis(host='redis', port=6379, db=0)
 class FormEndpoint(web.RequestHandler):
     def get(self):
         response = json.dumps(list(redis_conn.keys()))
+        self.set_header("Content-Type", "application/json")
         self.write(response)
     def post(self):
         form_data, id_ = tornado.escape.json_decode(self.request.body), uuid()
@@ -52,5 +53,5 @@ handlers = [
 if __name__ == "__main__":
     logging.info("Starting webserver")
     application = web.Application(handlers, **settings)
-    application.listen(81)
+    application.listen(80)
     ioloop.IOLoop.instance().start()
