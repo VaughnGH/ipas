@@ -20,15 +20,44 @@
   font-size: large;
 }
 
+.form {
+  display: block;
+  margin: 0px auto;
+  width: 90%;
+}
+
 .form-input > div > div {
   padding-top: 8px !important;
   padding-bottom: 8px !important;
+}
+
+.form-input > div > div > div {
+  width: 100% !important;
+}
+
+.date-input > div > div > div > div {
+  width: 100% !important;
 }
 
 .submit {
   display: block! important;
   width: 50%;
   margin: 10px auto 20px auto;
+}
+
+.temperature-input {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  opacity: 1.0;
+}
+
+.temperature-button.active {
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0 !important;
+  opacity: 0.5;
 }
 
 @keyframes App-logo-spin {
