@@ -64,7 +64,9 @@ export default class TableExampleComplex extends Component {
   }
 
   componentDidMount = () => {
-    $.getJSON('/api/v1/form' ,(data) => {
+    let form_id = this.props.match.params.form_id
+
+    $.getJSON(`/api/v1/get/${form_id}` , (data) => {
       console.log(data)
     })
   }

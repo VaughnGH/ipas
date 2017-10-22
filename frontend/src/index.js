@@ -23,7 +23,7 @@ ReactDOM.render(
 		<MuiThemeProvider>
 			<div>
 	      <Route exact path="/" component={App}/>
-	      <Route path="/result" component={Result}/>
+	      <Route path="/result/:form_id" component={Result}/>
       </div>
 		</MuiThemeProvider>
 	</Router>, 

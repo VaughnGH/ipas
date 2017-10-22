@@ -124,7 +124,10 @@ class App extends Component {
           type: "POST",
           url: '/api/v1/form',
           data: data,
-          success: () => { this.props.history.push('/result') },
+          success: (data) => { 
+            console.log(data) 
+            this.props.history.push(`/result/${data['id']}`) 
+          },
           dataType: 'json',
           settings: {
             contentType: 'application/json; charset=UTF-8'
@@ -309,7 +312,7 @@ class App extends Component {
         (
           <div className='loading'>
             <CircularProgress className='loading-item' size={80} thickness={5} />
-            <h1 className='loading-item'>Loading</h1>
+            <h1 className='loading-item'>Submitting form data</h1>
           </div>
         )
       }
