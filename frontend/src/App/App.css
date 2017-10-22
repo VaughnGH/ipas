@@ -1,4 +1,6 @@
 .App {
+  background-color: #222;
+  color: white;
 }
 
 .App-logo {
@@ -14,16 +16,19 @@
 
 .App-title {
   font-size: 1.5em;
+  color: white;
 }
 
 .App-intro {
   font-size: large;
+  color: white;
 }
 
 .form {
   display: block;
   margin: 0px auto;
   width: 90%;
+  color: white;
 }
 
 .form-input > div > div {

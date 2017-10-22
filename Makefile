@@ -1,7 +1,8 @@
 ###### BUILD / EXEC ######
 
-all: stop pull build run
+all: stop build run
 fresh: clean-all all
+deploy: stop pull build run
 
 pull:
 	git fetch --all && git reset --hard origin/master && git pull
