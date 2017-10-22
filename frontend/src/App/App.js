@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames'
+import $ from 'jquery'
 
 import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -80,6 +81,26 @@ class App extends Component {
           this.handleOpen()
         }
       })
+    else {
+      let data = {
+        start_date: parseInt(this.state.start_date, 10),
+        end_date: parseInt(this.state.end_date, 10),
+        num_pax: parseInt(this.state.num_pax, 10),
+        weather: this.state.weather,
+        avg_distance: parseFloat(this.state.avg_distance, 10),
+        num_vehicles: parseInt(this.state.num_vehicles, 10),
+        mre_per_day: parseInt(this.state.mre_per_day, 10),
+        ugr_per_day: parseInt(this.state.ugr_per_day, 10)
+      }
+
+      $.ajax({
+        type: "POST",
+        url: 'http://127.0.0.1:8080/api/v1/form',
+        data: data,
+        success: () => { console.log('sexy as fuck') },
+        dataType: 'json'
+      });
+    }
     
   }
 
@@ -104,7 +125,6 @@ class App extends Component {
                         labelColor="#fff"
                         />
             })
-
   }
 
   saveInfo = (key, value) => {
