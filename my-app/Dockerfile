@@ -10,4 +10,4 @@ COPY ./ ./
 
 RUN npm install
 
-ENTRYPOINT npm run start
+CMD npm run start

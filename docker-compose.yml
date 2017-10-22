@@ -3,9 +3,20 @@ version: '2'
 services:
   backend:
     build: ./api
+    container_name: tornado
     ports:
       - 81:81
+    links:
+      - redis
+    depends_on:
+      - redis
   react:
     build: ./my-app
+    container_name: react
     ports:
-      - 3000:80
+      - 80:3000
+  redis:
+    image: "redis:4"
+    container_name: redis
+    ports:
+     - "6379"
