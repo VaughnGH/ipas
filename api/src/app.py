@@ -13,7 +13,7 @@ WATER_REQ = {'hot' : 3.17, 'mild' : 1.59, 'cold' : 2.37}
 REQ_FIELDS = {'start_date', 'end_date', 'num_pax', 'weather', 'avg_distance', 'num_vehicles', 'mre_per_day', 'ugr_per_day'} 
 RESP_FIELDS = {'total_road_miles', 'meals_per_day', 'total_mre', 'total_ugr', 'num_days', 'water_per_day', 'total_water_req'}
 
-redis_conn = redis.StrictRedis(host='redis', port=6379, db=0)
+redis_conn = redis.StrictRedis(host='redis', port=6379, db=0, charset="utf-8", decode_responses=True))
 
 class FormEndpoint(web.RequestHandler):
     def get(self):
@@ -26,6 +26,11 @@ class FormEndpoint(web.RequestHandler):
         #json.dumps means potential alphabetically sorted keys, due to python's dict hash() for key alignment
         response = Form(form_dict).to_dict()
         response['id'] = id_
+        self.set_header("Content-Type", "application/json")
+        self.write(response)
+class FormRetrieve(web.RequestHandler):
+    def get(self, id_):
+        response = srt(redis_conn.get(id_))
         self.set_header("Content-Type", "application/json")
         self.write(response)
 
@@ -53,6 +58,7 @@ settings = {
         }
 handlers = [
         (r'/form', FormEndpoint),
+        (r'/get/([A-Za-z0-9-]+)', FormRetrieve),
         ]
 
 if __name__ == "__main__":
