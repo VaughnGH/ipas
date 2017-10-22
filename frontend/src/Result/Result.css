@@ -1,0 +1,16 @@
+.result-container {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+}
+
+.result-container > h1 {
+	text-align: center;
+}
+
+.result-container > img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
