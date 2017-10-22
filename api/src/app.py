@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import datetime
 import tornado
 from tornado import web, ioloop
 from uuid import uuid4 as uuid
@@ -20,19 +21,22 @@ class FormEndpoint(web.RequestHandler):
         self.set_header("Content-Type", "application/json")
         self.write(response)
     def post(self):
-        form_data, id_ = tornado.escape.json_decode(self.request.body), uuid()
-        redis_conn.set(id_, json.dumps(form_data))
+        form_dict, id_ = tornado.escape.json_decode(self.request.body), uuid()
+        redis_conn.set(id_, json.dumps(form_dict))
         #json.dumps means potential alphabetically sorted keys, due to python's dict hash() for key alignment
-        response = Form(form_data).to_dict()
+        response = Form(form_dict).to_dict()
         response['id'] = id_
         self.set_header("Content-Type", "application/json")
         self.write(response)
 
 class Form:
     def __init__(self, form_dict):
+        start_date = datetime.datetime.strptime(form_dict['start_date'], "%Y/%m/%d")
+        end_date = datetime.datetime.strptime(form_dict['end_date'], "%Y/%m/%d")
+        self.num_days = abs((end_date-start_date).days)
         self.total_road_miles = form_dict['avg_distance'] * form_dict['num_vehicles']
-        self.total_mre = form_dict['mre_per_day'] * form_dict['num_pax'] * form_data['num_days']
-        self.total_ugr = form_dict['ugr_per_day'] * form_dict['num_pax'] * form_data['num_days']
+        self.total_mre = form_dict['mre_per_day'] * form_dict['num_pax'] * num_days
+        self.total_ugr = form_dict['ugr_per_day'] * form_dict['num_pax'] * num_days
         self.meals_per_day = form_dict['mre_per_day'] + form_dict['ugr_per_day']
         self.water_per_day = WATER_REQ[form_dict['weather'].lower()]
         self.total_water_req = form_dict['num_pax'] * form_dict['num_days'] * self.water_per_day
