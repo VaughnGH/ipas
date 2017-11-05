@@ -3,18 +3,27 @@
 all: stop build run
 fresh: clean-all all
 deploy: stop pull build run
+prod: stop configure-prod build-prod run-prod
+
 
 pull:
 	git fetch --all && git reset --hard origin/master && git pull
 build:
-	sudo docker-compose --project-name cross-country build
+	sudo docker-compose --project-name ipas build
 run:
-	sudo docker-compose --project-name cross-country up
+	sudo docker-compose --project-name ipas up
+
+configure-prod: 
+	cd ./frontend && sudo npm install && npm run build && cd - && cp -r ./frontend/build ./proxy
+build-prod:
+	sudo docker-compose --project-name ipas -f docker-compose-prod.yml build
+run-prod:
+	sudo docker-compose --project-name ipas -f docker-compose-prod.yml up
 
 ####### CLEANUP #########
 
 stop:
-	sudo docker-compose --project-name cross-country down
+	sudo docker-compose --project-name ipas down
 
 clean-all: clean purge
 
